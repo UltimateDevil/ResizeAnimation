@@ -1,5 +1,6 @@
 package ultimate.devil.myapplication;
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -16,18 +17,20 @@ public class UltimateResizeAnimation extends Animation {
     private final int targetWidth;
     private View view;
 
-    public UltimateResizeAnimation(View view, int targetWidth, int targetHeight, int startHeight, int startWidth) {
+    public UltimateResizeAnimation(View view, int targetWidth, int targetHeight) {
         this.view = view;
         this.targetWidth = targetWidth;
         this.targetHeight = targetHeight;
-        this.startWidth = startWidth;
-        this.startHeight = startHeight;
+        this.startWidth = view.getWidth();
+        this.startHeight = view.getHeight();
     }
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
+
         int newWidth = (int) (startWidth + (targetWidth - startWidth) * interpolatedTime);
         int newHeight = (int) (startHeight + (targetHeight - startHeight) * interpolatedTime);
+        Log.d("TAG", "applyTransformation: "+newHeight+" "+newWidth);
         view.getLayoutParams().width = newWidth;
         view.getLayoutParams().height = newHeight;
         view.requestLayout();

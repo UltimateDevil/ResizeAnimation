@@ -12,20 +12,32 @@ import android.widget.RelativeLayout;
 import ultimate.devil.ultimateanimation.UltimateBounceAnimator;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean resizeUp = false;
+    private int targerHeight;
+    private int targerWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button buton= (Button)findViewById(R.id.button);
+        final RelativeLayout button= (RelativeLayout)findViewById(R.id.button);
 
         final RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
 
-        buton.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UltimateResizeAnimation ultimate = new UltimateResizeAnimation(buton, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,200,200);
+                if (!resizeUp){
+                    targerHeight = 600;
+                    targerWidth = 600;
+                    resizeUp=true;
+                }else {
+                    targerHeight = 200;
+                    targerWidth = 200;
+                    resizeUp=false;
+                }
+                UltimateResizeAnimation ultimate = new UltimateResizeAnimation(button, targerWidth,targerHeight);
                 ultimate.setDuration(500);
                 mainLayout.startAnimation(ultimate);
             }
